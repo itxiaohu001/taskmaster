@@ -12,31 +12,31 @@ import (
 type Config struct {
 	// 调度器配置
 	Scheduler SchedulerConfig `json:"scheduler"`
-	
+
 	// 存储配置
 	Storage StorageConfig `json:"storage"`
-	
+
 	// 监控配置
 	Monitor MonitorConfig `json:"monitor"`
-	
+
 	// 日志配置
 	Log LogConfig `json:"log"`
 }
 
 // SchedulerConfig 调度器配置
 type SchedulerConfig struct {
-	Workers        int           `json:"workers"`         // 工作协程数量
-	MaxQueueSize   int           `json:"max_queue_size"`  // 最大队列大小
-	TaskTimeout    time.Duration `json:"task_timeout"`    // 任务超时时间
-	RetryInterval  time.Duration `json:"retry_interval"`  // 重试间隔
-	MaxRetries     int           `json:"max_retries"`     // 最大重试次数
+	Workers       int           `json:"workers"`        // 工作协程数量
+	MaxQueueSize  int           `json:"max_queue_size"` // 最大队列大小
+	TaskTimeout   time.Duration `json:"task_timeout"`   // 任务超时时间
+	RetryInterval time.Duration `json:"retry_interval"` // 重试间隔
+	MaxRetries    int           `json:"max_retries"`    // 最大重试次数
 }
 
 // StorageConfig 存储配置
 type StorageConfig struct {
 	Type     string `json:"type"`      // 存储类型: memory, file, database
-	FilePath  string `json:"file_path"` // 文件存储路径
-	Database  string `json:"database"`  // 数据库连接字符串
+	FilePath string `json:"file_path"` // 文件存储路径
+	Database string `json:"database"`  // 数据库连接字符串
 }
 
 // MonitorConfig 监控配置
@@ -60,14 +60,14 @@ type LogConfig struct {
 func DefaultConfig() *Config {
 	return &Config{
 		Scheduler: SchedulerConfig{
-			Workers:        4,
-			MaxQueueSize:   1000,
-			TaskTimeout:    30 * time.Second,
-			RetryInterval:  5 * time.Second,
-			MaxRetries:     3,
+			Workers:       4,
+			MaxQueueSize:  1000,
+			TaskTimeout:   30 * time.Second,
+			RetryInterval: 5 * time.Second,
+			MaxRetries:    3,
 		},
 		Storage: StorageConfig{
-			Type:    "memory",
+			Type:     "file",
 			FilePath: "./data/tasks.json",
 		},
 		Monitor: MonitorConfig{
@@ -213,4 +213,4 @@ func (c *Config) Validate() error {
 	}
 
 	return nil
-} 
+}

@@ -28,6 +28,11 @@ func (t *SimpleTask) Execute(ctx context.Context) error {
 	return nil
 }
 
+// GetMessage 获取消息内容
+func (t *SimpleTask) GetMessage() string {
+	return t.message
+}
+
 // HTTPTask HTTP请求任务
 type HTTPTask struct {
 	*BaseTask
@@ -51,12 +56,27 @@ func (t *HTTPTask) Execute(ctx context.Context) error {
 	// 这里可以实现实际的HTTP请求
 	// 为了示例，我们只是模拟
 	fmt.Printf("执行HTTP任务: %s %s\n", t.method, t.url)
-	
+
 	// 模拟网络延迟
 	time.Sleep(2 * time.Second)
-	
+
 	// 模拟成功
 	return nil
+}
+
+// GetURL 获取URL
+func (t *HTTPTask) GetURL() string {
+	return t.url
+}
+
+// GetMethod 获取HTTP方法
+func (t *HTTPTask) GetMethod() string {
+	return t.method
+}
+
+// GetTimeout 获取超时时间
+func (t *HTTPTask) GetTimeout() time.Duration {
+	return t.timeout
 }
 
 // FileProcessTask 文件处理任务
@@ -78,12 +98,22 @@ func NewFileProcessTask(id, name, filePath, action string, priority, maxRetries 
 // Execute 执行文件处理任务
 func (t *FileProcessTask) Execute(ctx context.Context) error {
 	fmt.Printf("执行文件任务: %s %s\n", t.action, t.filePath)
-	
+
 	// 模拟文件处理
 	time.Sleep(500 * time.Millisecond)
-	
+
 	// 模拟成功
 	return nil
+}
+
+// GetFilePath 获取文件路径
+func (t *FileProcessTask) GetFilePath() string {
+	return t.filePath
+}
+
+// GetAction 获取操作类型
+func (t *FileProcessTask) GetAction() string {
+	return t.action
 }
 
 // BatchTask 批量任务
@@ -103,16 +133,21 @@ func NewBatchTask(id, name string, tasks []Task, priority, maxRetries int) *Batc
 // Execute 执行批量任务
 func (t *BatchTask) Execute(ctx context.Context) error {
 	fmt.Printf("开始执行批量任务: %s, 包含 %d 个子任务\n", t.Name(), len(t.tasks))
-	
+
 	for i, task := range t.tasks {
 		fmt.Printf("执行子任务 %d: %s\n", i+1, task.Name())
 		if err := task.Execute(ctx); err != nil {
 			return fmt.Errorf("子任务 %s 执行失败: %w", task.Name(), err)
 		}
 	}
-	
+
 	fmt.Printf("批量任务 %s 执行完成\n", t.Name())
 	return nil
+}
+
+// GetTasks 获取子任务列表
+func (t *BatchTask) GetTasks() []Task {
+	return t.tasks
 }
 
 // RetryableTask 可重试任务包装器
@@ -132,12 +167,12 @@ func NewRetryableTask(task Task, maxRetries int) *RetryableTask {
 // Execute 执行可重试任务
 func (t *RetryableTask) Execute(ctx context.Context) error {
 	var lastErr error
-	
+
 	for i := 0; i <= t.GetMaxRetries(); i++ {
 		if err := t.task.Execute(ctx); err != nil {
 			lastErr = err
 			if i < t.GetMaxRetries() {
-				fmt.Printf("任务 %s 执行失败，将在 5s 后重试 (第 %d 次重试)\n", 
+				fmt.Printf("任务 %s 执行失败，将在 5s 后重试 (第 %d 次重试)\n",
 					t.Name(), i+1)
 				time.Sleep(5 * time.Second)
 				continue
@@ -146,6 +181,11 @@ func (t *RetryableTask) Execute(ctx context.Context) error {
 			return nil
 		}
 	}
-	
+
 	return fmt.Errorf("任务 %s 在 %d 次重试后仍然失败: %w", t.Name(), t.GetMaxRetries(), lastErr)
-} 
+}
+
+// GetWrappedTask 获取被包装的任务
+func (t *RetryableTask) GetWrappedTask() Task {
+	return t.task
+}

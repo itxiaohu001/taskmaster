@@ -14,7 +14,7 @@ import (
 func main() {
 	// 1. 创建配置
 	cfg := config.DefaultConfig()
-	cfg.Scheduler.Workers = 2
+	cfg.Scheduler.Workers = 1
 	cfg.Log.Level = "info"
 
 	// 2. 创建任务管理器
