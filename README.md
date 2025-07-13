@@ -54,7 +54,7 @@ func main() {
         log.Printf("添加任务失败: %v", err)
     }
 
-    // 6. 等待完成
+    // 6. 等待所有 worker 退出
     manager.Wait()
 }
 ```

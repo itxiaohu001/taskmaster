@@ -6,8 +6,8 @@ import (
 	"log"
 	"time"
 
-	"task/pkg/manager"
 	"task/pkg/config"
+	"task/pkg/manager"
 	"task/pkg/task"
 )
 
@@ -41,7 +41,7 @@ func main() {
 		}
 	}
 
-	// 6. 等待所有任务完成
+	// 6. 等待所有 worker 退出
 	manager.Wait()
 
 	fmt.Println("所有任务执行完成!")
@@ -51,7 +51,7 @@ func main() {
 func batchTaskExample() {
 	cfg := config.DefaultConfig()
 	manager := manager.NewManager(cfg)
-	
+
 	if err := manager.Start(); err != nil {
 		log.Fatalf("启动任务管理器失败: %v", err)
 	}
@@ -66,11 +66,12 @@ func batchTaskExample() {
 
 	// 创建批量任务
 	batchTask := task.NewBatchTask("batch1", "批量任务", subTasks, 1, 3)
-	
+
 	if err := manager.AddTask(batchTask); err != nil {
 		log.Printf("添加批量任务失败: %v", err)
 	}
 
+	// 等待所有 worker 退出
 	manager.Wait()
 }
 
@@ -78,7 +79,7 @@ func batchTaskExample() {
 func retryTaskExample() {
 	cfg := config.DefaultConfig()
 	manager := manager.NewManager(cfg)
-	
+
 	if err := manager.Start(); err != nil {
 		log.Fatalf("启动任务管理器失败: %v", err)
 	}
@@ -91,11 +92,12 @@ func retryTaskExample() {
 
 	// 包装为可重试任务
 	retryTask := task.NewRetryableTask(failingTask, 3)
-	
+
 	if err := manager.AddTask(retryTask); err != nil {
 		log.Printf("添加重试任务失败: %v", err)
 	}
 
+	// 等待所有 worker 退出
 	manager.Wait()
 }
 
@@ -103,7 +105,7 @@ func retryTaskExample() {
 func customTaskExample() {
 	cfg := config.DefaultConfig()
 	manager := manager.NewManager(cfg)
-	
+
 	if err := manager.Start(); err != nil {
 		log.Fatalf("启动任务管理器失败: %v", err)
 	}
@@ -119,6 +121,7 @@ func customTaskExample() {
 		log.Printf("添加自定义任务失败: %v", err)
 	}
 
+	// 等待所有 worker 退出
 	manager.Wait()
 }
 
@@ -130,12 +133,12 @@ type CustomTask struct {
 
 func (t *CustomTask) Execute(ctx context.Context) error {
 	fmt.Printf("执行自定义任务: %s, 数据: %s\n", t.Name(), t.data)
-	
+
 	// 模拟处理时间
 	time.Sleep(1 * time.Second)
-	
+
 	// 设置结果
 	t.SetResult(fmt.Sprintf("处理结果: %s", t.data))
-	
+
 	return nil
-} 
+}
