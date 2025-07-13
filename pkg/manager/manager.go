@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"sync"
 
-	"task/internal/engine"
-	"task/pkg/config"
-	"task/pkg/task"
+	"github.com/itxiaohu001/taskmaster/internal/engine"
+	"github.com/itxiaohu001/taskmaster/pkg/config"
+	"github.com/itxiaohu001/taskmaster/pkg/task"
 )
 
 // Manager 任务管理器
@@ -236,4 +236,4 @@ func (m *Manager) OnTaskFailed(t task.Task) {
 // OnTaskCancelled 任务取消事件
 func (m *Manager) OnTaskCancelled(t task.Task) {
 	m.logger.Warn("Task cancelled", "task_id", t.ID(), "task_name", t.Name())
-} 
+}

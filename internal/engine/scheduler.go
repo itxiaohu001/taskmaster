@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"task/pkg/task"
+	"github.com/itxiaohu001/taskmaster/pkg/task"
 )
 
 // Scheduler 任务调度器
@@ -216,4 +216,4 @@ func (s *Scheduler) triggerTaskCancelled(t task.Task) {
 	for _, handler := range s.eventHandlers {
 		handler.OnTaskCancelled(t)
 	}
-} 
+}

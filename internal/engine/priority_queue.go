@@ -3,7 +3,8 @@ package engine
 import (
 	"container/heap"
 	"sync"
-	"task/pkg/task"
+
+	"github.com/itxiaohu001/taskmaster/pkg/task"
 )
 
 // PriorityQueue 优先级队列
@@ -93,4 +94,4 @@ func (pq *PriorityQueue) Remove(taskID string) {
 		heap.Remove(pq, index)
 		delete(pq.index, taskID)
 	}
-} 
+}

@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"os"
 	"sync"
-	"task/pkg/task"
 	"time"
+
+	"github.com/itxiaohu001/taskmaster/pkg/task"
 )
 
 // TaskData 用于序列化的任务数据结构

@@ -6,9 +6,9 @@ import (
 	"log"
 	"time"
 
-	"task/pkg/config"
-	"task/pkg/manager"
-	"task/pkg/task"
+	"github.com/itxiaohu001/taskmaster/pkg/config"
+	"github.com/itxiaohu001/taskmaster/pkg/manager"
+	"github.com/itxiaohu001/taskmaster/pkg/task"
 )
 
 func main() {

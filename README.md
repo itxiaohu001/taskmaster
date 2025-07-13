@@ -17,7 +17,7 @@
 ### 安装
 
 ```bash
-go get github.com/your-username/task
+go get github.com/itxiaohu001/taskmaster
 ```
 
 ### 基本使用
@@ -27,9 +27,9 @@ package main
 
 import (
     "log"
-    "task/pkg/manager"
-    "task/pkg/config"
-    "task/pkg/task"
+    "github.com/itxiaohu001/taskmaster/pkg/manager"
+    "github.com/itxiaohu001/taskmaster/pkg/config"
+    "github.com/itxiaohu001/taskmaster/pkg/task"
 )
 
 func main() {

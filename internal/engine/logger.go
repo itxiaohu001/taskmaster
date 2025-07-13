@@ -6,8 +6,9 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"task/pkg/config"
-	"task/pkg/task"
+
+	"github.com/itxiaohu001/taskmaster/pkg/config"
+	"github.com/itxiaohu001/taskmaster/pkg/task"
 )
 
 // Logger 日志实现
@@ -176,4 +177,4 @@ func (m *MetricsMonitor) RecordTaskCompleted(t task.Task) {
 // RecordTaskFailed 记录任务失败
 func (m *MetricsMonitor) RecordTaskFailed(t task.Task) {
 	// 这里可以记录更详细的指标
-} 
+}
