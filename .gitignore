@@ -1,1 +1,7 @@
+.idea
+.vscode
+
+.gitignore
+
 tasks.json
+task.log
