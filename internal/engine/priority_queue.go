@@ -31,7 +31,6 @@ func NewPriorityQueue() *PriorityQueue {
 	return pq
 }
 
-// 实现 heap.Interface
 func (pq *PriorityQueue) Len() int {
 	return len(pq.items)
 }

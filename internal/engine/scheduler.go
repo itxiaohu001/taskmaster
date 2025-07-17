@@ -31,14 +31,15 @@ type EventHandler interface {
 }
 
 // NewScheduler 创建新的调度器
-func NewScheduler(workers int) *Scheduler {
+func NewScheduler(workers int, eventHandlers ...EventHandler) *Scheduler {
 	ctx, cancel := context.WithCancel(context.Background())
 	return &Scheduler{
-		tasks:   make(map[string]task.Task),
-		queue:   NewPriorityQueue(),
-		workers: workers,
-		ctx:     ctx,
-		cancel:  cancel,
+		tasks:         make(map[string]task.Task),
+		queue:         NewPriorityQueue(),
+		workers:       workers,
+		ctx:           ctx,
+		cancel:        cancel,
+		eventHandlers: eventHandlers,
 	}
 }
 
